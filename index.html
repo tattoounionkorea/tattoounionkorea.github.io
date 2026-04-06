@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="타투유니온은 타투이스트(문신사)들의 노동조합입니다. 민주노총 화학섬유식품산업노조 타투유니온지회.">
+  <meta name="keywords" content="타투유니온, 타투이스트, 노동조합, 문신사법, 타투 노동권, tattoo union">
+  <meta property="og:title" content="타투유니온 — 타투이스트의 노동조합">
+  <meta property="og:description" content="타투예술노동자가 더 안전하고 존중받는 환경에서 일할 수 있도록.">
+  <title>타투유니온 — 타투이스트의 노동조합</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2d42b0;
+      --blue-dark: #1e2e80;
+      --bg: #f5f4f0;
+      --text: #1a1a1a;
+      --muted: rgba(26,26,26,0.55);
+      --border: rgba(0,0,0,0.09);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(245,244,240,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo img { height: 28px; width: auto; display: block; }
+
+    .nav-join {
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--blue);
+      color: #f5f4f0;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+
+    .nav-join:hover { background: var(--blue-dark); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 45% at 85% 25%, rgba(45,66,176,0.09) 0%, transparent 65%),
+        var(--bg);
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+    .hero-label {
+      font-size: clamp(12px, 1.2vw, 16px);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+
+    .hero-title {
+      font-size: clamp(52px, 9vw, 112px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+
+    .hero-title .line-blue { color: var(--blue); display: block; }
+
+    .hero-desc {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.6s forwards;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--blue);
+      color: #f5f4f0;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: background 0.2s, transform 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.8s forwards;
+    }
+
+    .hero-cta:hover { background: var(--blue-dark); transform: translateY(-2px); }
+
+    /* SECTIONS */
+    section {
+      padding: 96px 40px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+    }
+
+    .section-body {
+      font-size: 17px;
+      color: rgba(26,26,26,0.65);
+      line-height: 1.9;
+    }
+
+    .section-body p { margin-bottom: 20px; }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 40px;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .stat {
+      background: rgba(45,66,176,0.06);
+      border: 1px solid rgba(45,66,176,0.16);
+      padding: 36px 28px;
+    }
+
+    .stat-num {
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 900;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* BENEFITS */
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .benefit {
+      background: rgba(45,66,176,0.04);
+      border: 1px solid rgba(45,66,176,0.12);
+      padding: 30px 28px;
+      transition: background 0.2s;
+    }
+
+    .benefit:hover { background: rgba(45,66,176,0.08); }
+
+    .benefit-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .benefit-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* JOIN SECTION */
+    .join-section {
+      padding: 100px 40px;
+      background: var(--blue);
+      text-align: center;
+    }
+
+    .join-section .section-label { color: rgba(255,255,255,0.65); }
+
+    .join-section .section-title {
+      font-size: clamp(30px, 5vw, 56px);
+      color: #f5f4f0;
+      margin-bottom: 20px;
+    }
+
+    .join-section .section-body {
+      color: rgba(255,255,255,0.72);
+      max-width: 800px;
+      margin: 0 auto 48px;
+    }
+
+    .join-btn {
+      display: inline-block;
+      padding: 20px 56px;
+      background: #f5f4f0;
+      color: var(--blue);
+      font-size: 16px;
+      font-weight: 900;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .join-btn:hover { background: #e4e3df; transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer {
+      padding: 48px 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: nowrap;
+      gap: 24px;
+    }
+
+    .footer-logo img { height: 20px; width: auto; opacity: 0.3; flex-shrink: 0; }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(26,26,26,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--blue); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(26,26,26,0.5);
+      width: 100%;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .hero { padding: 0 20px 60px; }
+      section { padding: 72px 20px; }
+      .divider { margin: 0 20px; }
+      .join-section { padding: 80px 20px; }
+      footer { padding: 40px 20px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <img src="KakaoTalk_20251013_131833243_06.png" alt="tattoounion.">
+    </div>
+    <div style="display:flex; align-items:center; gap:24px;">
+      <a href="history.html" style="font-size:14px; font-weight:700; color:var(--text); text-decoration:none; letter-spacing:0.04em; opacity:0.7; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">연혁</a>
+      <a class="nav-join" href="https://cmsagree2.npas.co.kr/fiBQteuFjO?bc=07" target="_blank" rel="noopener">가입</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-label">민주노총 화섬식품노조 타투유니온지회</div>
+      <h1 class="hero-title">
+        타투이스트<br>
+        <span class="line-blue">노동조합.</span>
+      </h1>
+      <p class="hero-desc">
+        타투예술노동자가 더 안전하게,<br>존중받으며 일할 수 있는 세상을 만듭니다.
+      </p>
+      <a class="hero-cta" href="https://cmsagree2.npas.co.kr/fiBQteuFjO?bc=07" target="_blank" rel="noopener">지금 가입하기 →</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <section>
+    <div class="section-label">타투유니온은</div>
+    <h2 class="section-title">타투이스트(문신사)들의<br>노동조합입니다</h2>
+    <div class="section-body">
+      <p>타투유니온은 2020년, 시대와 문화를 반영하지 못하는 불합리한 판례를 개선하여 타투이스트의 일반 직업화를 이루고,<br>타투이스트의 복지와 직업 안정을 위하여 설립과 시민사회단체와의 연대를 선언했습니다.</p>
+      <p>오랜 투쟁 끝에 2025년 가을, 문신사법 통과라는 쾌거를 이루었으며,<br>이제는 문신사법의 시행령과 세부규칙을 만드는 과정에 참여하고 있습니다.</p>
+      <p>타투예술노동자가 더 안전하고 존중받는 환경에서 일할 수 있게 노동권을 증진시키고,<br>문화예술로서 타투산업이 건강하게 발전·유지될 수 있도록 나아가는 여정에 힘을 모아 주십시오.</p>
+      <p>혼자 가면 빨리 가지만, 함께 가면 멀리 간다고 합니다. 우리 함께 멀리 갑시다.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">120만</div>
+        <div class="stat-label">민주노총 전체 조합원</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">45,000</div>
+        <div class="stat-label">화섬식품노조 조합원<br>239개 사업장지회</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">600+</div>
+        <div class="stat-label">타투유니온 조합원</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="section-label">조합원 혜택</div>
+    <h2 class="section-title">혼자 감당하지<br>않아도 됩니다</h2>
+    <div class="section-body">
+      <p>노동조합 가입은 내 노동 조건을 개인이 아닌 집단으로 다루겠다는 선택입니다.</p>
+    </div>
+
+    <div class="benefits">
+      <div class="benefit">
+        <div class="benefit-title">건강검진</div>
+        <div class="benefit-body">녹색병원에서 연 2회 저렴한 비용으로 정기건강검진</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-title">감염관리교육</div>
+        <div class="benefit-body">타투이스트를 위한 무상 감염관리교육</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-title">법률 지원</div>
+        <div class="benefit-body">법률분쟁 시 타투이스트 전문 담당 변호사와 공동 대응, 생활 법률 문제 무료 상담</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-title">세무 지원</div>
+        <div class="benefit-body">세무 업무 교육 및 협업</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-title">정보 공유</div>
+        <div class="benefit-body">타투 법제화 과정 관련 신뢰할 수 있는 정보 공유 및 전달</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-title">네트워크</div>
+        <div class="benefit-body">고립되기 쉬운 프리랜서 노동자들 간 소통 네트워크 형성, 지식 공유와 학습을 통한 전문성 성장</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="section-label">지금 우리가 하는 일</div>
+    <h2 class="section-title">시행령을 함께<br>만들고 있습니다</h2>
+    <div class="section-body">
+      <p>타투유니온은 문신사법 시행령을 만드는 보건복지부 자문회의 참여단체로 선정되었습니다.<br>법의 큰 틀은 만들어졌지만, 세부 규칙은 아직 결정되지 않았습니다.</p>
+      <p>지금이 바로 타투이스트의 목소리가 제도 안에 반영될 수 있는 시간입니다.<br>타투이스트의 노동권을 지키는 기준을 함께 만들어가 주십시오.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section style="text-align: center;">
+    <div class="section-label">인스타그램 · 유튜브</div>
+    <h2 class="section-title" style="margin-bottom: 36px;">타투유니온의<br>활동을 팔로우하세요</h2>
+    <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+      <a href="https://www.instagram.com/tattoo.union.korea/" target="_blank" rel="noopener"
+        style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:220px; padding:16px 0; border:2px solid var(--blue); color:var(--blue); font-size:15px; font-weight:700; text-decoration:none; letter-spacing:0.04em; transition: background 0.2s, color 0.2s;"
+        onmouseover="this.style.background='var(--blue)'; this.style.color='#f5f4f0';"
+        onmouseout="this.style.background='transparent'; this.style.color='var(--blue)';">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+        </svg>
+        인스타그램
+      </a>
+      <a href="https://www.youtube.com/@koreatattoounion8292" target="_blank" rel="noopener"
+        style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:220px; padding:16px 0; border:2px solid var(--blue); color:var(--blue); font-size:15px; font-weight:700; text-decoration:none; letter-spacing:0.04em; transition: background 0.2s, color 0.2s;"
+        onmouseover="this.style.background='var(--blue)'; this.style.color='#f5f4f0';"
+        onmouseout="this.style.background='transparent'; this.style.color='var(--blue)';">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58a2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path>
+          <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"></polygon>
+        </svg>
+        유튜브
+      </a>
+    </div>
+  </section>
+
+  <div class="join-section">
+    <div class="section-label">조합 가입</div>
+    <h2 class="section-title">지금 함께하세요</h2>
+    <div class="section-body">
+      <p>조합원이 되어 우리의 노동 환경을 우리 스스로 개선합시다.</p>
+    </div>
+    <a class="join-btn" href="https://cmsagree2.npas.co.kr/fiBQteuFjO?bc=07" target="_blank" rel="noopener">조합원 가입 신청 →</a>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="KakaoTalk_20251013_131833243_06.png" alt="tattoounion.">
+      </div>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/tattoo.union.korea/" target="_blank" rel="noopener">인스타그램</a>
+        <a href="https://www.youtube.com/@koreatattoounion8292" target="_blank" rel="noopener">유튜브</a>
+        <a href="https://cafe.naver.com/tattoounionkorea" target="_blank" rel="noopener">조합원 카페</a>
+      </div>
+    </div>
+    <div class="footer-copy">민주노총 화학섬유식품산업노조 타투유니온지회</div>
+  </footer>
+
+</body>
+</html>
