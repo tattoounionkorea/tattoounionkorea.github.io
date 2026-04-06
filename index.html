@@ -308,6 +308,8 @@
       width: 100%;
     }
 
+    .mobile-br { display: none; }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -320,6 +322,7 @@
       .divider { margin: 0 20px; }
       .join-section { padding: 80px 20px; }
       footer { padding: 40px 20px; flex-direction: column; align-items: flex-start; }
+      .mobile-br { display: inline; }
     }
   </style>
 </head>
@@ -460,7 +463,7 @@
     <div class="section-label">조합 가입</div>
     <h2 class="section-title">지금 함께하세요</h2>
     <div class="section-body">
-      <p>조합원이 되어 우리의 노동 환경을 우리 스스로 개선합시다.</p>
+      <p>조합원이 되어 우리의 노동 환경을<span class="mobile-br"><br></span> 우리 스스로 개선합시다.</p>
     </div>
     <a class="join-btn" href="https://cmsagree2.npas.co.kr/fiBQteuFjO?bc=07" target="_blank" rel="noopener">조합원 가입 신청 →</a>
   </div>
