@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지회 업무 허브 — 타투유니온</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  ============================================================
+  - 로그인 기능은 없습니다. 이 URL을 아는 사람은 누구나 볼 수 있어요.
+  - 왼쪽 링크들은 "구글드라이브에서 링크 공유(링크가 있는 사용자에게
+    공개)"로 바꿔둔 것만 올리세요. 원본 폴더를 통으로 공유하지 마세요.
+  - 수정은 이 파일 맨 아래 스크립트의 HUB_DATA / TASKS_CONFIG만
+    고치면 됩니다. 자세한 방법은 페이지 맨 아래 "편집 안내" 참고.
+  ============================================================
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<style>
+  :root{
+    --bg:#FAFAF7;
+    --bg-card:#FFFFFF;
+    --bg-card-hover:#F4F2EC;
+    --fg:#141414;
+    --fg-dim:#6C6A63;
+    --red:#D6291F;
+    --red-dim:#F3C6C2;
+    --line:#E3E0D6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Pretendard Variable','Noto Sans KR',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 28px;
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .org{ font-size:13.5px; color:var(--fg-dim); letter-spacing:.3px; }
+  .topbar .org b{ color:var(--fg); }
+  .topbar .tag{
+    font-size:12.5px; font-weight:700; color:var(--red);
+    border:1px solid var(--red-dim); padding:5px 10px; letter-spacing:.5px;
+  }
+
+  /* ---------- Year strip ---------- */
+  .year-strip{ max-width:1200px; margin:0 auto; padding:22px 28px 0; }
+  .year-track{
+    display:grid; grid-template-columns:repeat(12,1fr);
+    border:1px solid var(--line); background:var(--bg-card);
+  }
+  .year-cell{
+    position:relative; padding:10px 8px 12px;
+    border-right:1px solid var(--line); text-align:left;
+    min-height:64px;
+  }
+  .year-cell:last-child{ border-right:none; }
+  .year-cell .m-label{
+    font-size:12.5px; color:var(--fg-dim); font-weight:700;
+    padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid var(--line);
+    text-align:center;
+  }
+  .year-cell.current{ background:var(--red-dim); }
+  .year-cell.current .m-label{ color:var(--red); border-bottom-color:var(--red); }
+  .m-events{ list-style:none; margin:0; padding:0; }
+  .m-events li{ font-size:12.5px; line-height:1.4; color:var(--fg); margin-bottom:8px; }
+  .m-events li:last-child{ margin-bottom:0; }
+  .m-memorial{
+    list-style:none; margin:8px 0 0; padding:8px 0 0 0;
+    border-top:1px dashed var(--line);
+  }
+  .m-memorial li{ font-size:11px; line-height:1.35; color:var(--fg-dim); margin-bottom:4px; }
+  .m-memorial li:last-child{ margin-bottom:0; }
+  .m-empty{ font-size:11.5px; color:var(--fg-dim); text-align:center; }
+
+  .quarter-grid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line); background:var(--bg-card); margin-top:16px;
+  }
+  .quarter-col{ padding:14px 16px; border-right:1px solid var(--line); }
+  .quarter-col:last-child{ border-right:none; }
+  .q-title{ font-size:13.5px; font-weight:700; color:var(--fg); }
+  .q-range{ font-size:12.5px; color:var(--fg-dim); margin-bottom:10px; }
+  .q-list{ list-style:none; margin:0; padding:0; }
+  .q-list li{ font-size:14.5px; padding:6px 0; border-bottom:1px solid var(--line); line-height:1.4; }
+  .q-list li:last-child{ border-bottom:none; }
+  .q-empty{ font-size:13.5px; color:var(--fg-dim); }
+
+  @media (max-width:860px){
+    .year-track{ grid-template-columns:repeat(4,1fr); }
+    .year-cell{ border-bottom:1px solid var(--line); }
+    .year-cell:nth-child(4n){ border-right:none; }
+    .quarter-grid{ grid-template-columns:1fr; }
+    .quarter-col{ border-right:none; border-bottom:1px solid var(--line); }
+    .quarter-col:last-child{ border-bottom:none; }
+  }
+
+  /* ---------- Header ---------- */
+  header{ padding:48px 28px 28px; max-width:1200px; margin:0 auto; }
+  h1{
+    font-size:clamp(28px,4.4vw,40px); font-weight:900;
+    line-height:1.2; margin:0 0 10px; letter-spacing:-0.4px;
+  }
+  header p{ font-size:16px; color:var(--fg-dim); margin:0; max-width:560px; line-height:1.6; }
+
+  /* ---------- Layout: sidebar + main ---------- */
+  .layout{
+    max-width:1200px; margin:0 auto; padding:8px 28px 100px;
+    display:flex; align-items:flex-start; gap:36px;
+  }
+  .sidebar{
+    flex:0 0 260px; position:sticky; top:24px;
+  }
+  #search{
+    width:100%; padding:12px 14px; margin-bottom:18px;
+    border:1px solid var(--line); background:var(--bg-card); color:var(--fg);
+    border-radius:2px; font-family:inherit; font-size:15px;
+  }
+  #search::placeholder{ color:var(--fg-dim); }
+  #search:focus{ outline:none; border-color:var(--red); }
+  #search:focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+
+  .cat-block{ margin-bottom:26px; }
+  .cat-label{
+    font-size:12px; font-weight:700; color:var(--fg-dim);
+    letter-spacing:.6px; text-transform:uppercase;
+    margin-bottom:8px; padding-bottom:8px; border-bottom:2px solid var(--fg);
+  }
+  .side-link{
+    display:flex; justify-content:space-between; align-items:baseline; gap:8px;
+    padding:10px 4px; text-decoration:none; color:var(--fg);
+    border-bottom:1px solid var(--line); border-left:2px solid transparent;
+    font-size:15px; font-weight:500;
+  }
+  .side-link:hover{ border-left-color:var(--red); padding-left:10px; background:var(--bg-card-hover); }
+  .side-link:focus-visible{ outline:2px solid var(--red); outline-offset:-2px; }
+  .side-link .note{ font-size:12.5px; color:var(--fg-dim); font-weight:400; }
+  .side-link .arrow{ color:var(--red); font-size:13px; flex-shrink:0; }
+  .side-empty{
+    font-size:13.5px; color:var(--fg-dim); line-height:1.7; padding:10px 4px;
+    border-bottom:1px solid var(--line);
+  }
+  .side-empty code{ background:#EFEDE4; padding:1px 5px; border-radius:3px; }
+
+  /* ---------- Main / tasks ---------- */
+  main{ flex:1 1 auto; min-width:0; }
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:18px; padding-bottom:14px; border-bottom:2px solid var(--fg);
+  }
+  .section-head h2{ font-size:21px; font-weight:900; margin:0; letter-spacing:-0.2px; }
+  .section-sub{ font-size:13.5px; color:var(--fg-dim); }
+
+  .roster{ margin-top:56px; }
+  .roster-columns{
+    display:grid; grid-template-columns:1fr 1fr; gap:28px;
+  }
+  .roster-group-label{
+    font-size:12px; font-weight:700; color:var(--fg-dim);
+    letter-spacing:.6px; text-transform:uppercase; margin:0 0 10px;
+  }
+  .roster-block{ margin-bottom:26px; }
+  .roster-block:last-child{ margin-bottom:0; }
+  .roster-note{
+    font-size:12.5px; color:var(--fg-dim); line-height:1.5;
+    margin:-4px 0 10px;
+  }
+  .delegate-stats{
+    display:flex; flex-wrap:wrap; gap:16px; margin:-4px 0 10px;
+  }
+  .delegate-stats span{ font-size:13.5px; color:var(--fg-dim); }
+  .delegate-stats b{ color:var(--red); font-size:17px; font-weight:900; }
+  .delegates{ margin-top:56px; }
+  .auditors{ margin-top:56px; }
+  .roster-committee{
+    border:1px solid var(--line); background:var(--bg-card);
+  }
+  .roster-row{
+    display:flex; align-items:center; gap:14px;
+    padding:12px 16px; border-bottom:1px solid var(--line);
+    font-size:15px;
+  }
+  .roster-row:last-child{ border-bottom:none; }
+  .roster-role{
+    flex:0 0 92px; font-weight:700; color:var(--red); font-size:13.5px;
+  }
+  .roster-name{ flex:1 1 auto; font-weight:500; }
+  .roster-handle{
+    color:var(--fg-dim); text-decoration:none; font-size:13.5px;
+  }
+  .roster-handle:hover{ color:var(--red); }
+
+  @media (max-width:640px){
+    .roster-columns{ grid-template-columns:1fr; }
+  }
+
+  .task-list{
+    border:1px solid var(--line); background:var(--bg-card);
+  }
+  .task-row{
+    display:flex; align-items:flex-start; gap:14px;
+    padding:14px 18px; border-bottom:1px solid var(--line); font-size:15px;
+  }
+  .task-row:last-child{ border-bottom:none; }
+  .task-check{
+    flex:0 0 20px; width:20px; height:20px; margin-top:2px;
+    border:1.5px solid var(--line); border-radius:4px; background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:900; color:#fff;
+  }
+  .task-check.done{ background:var(--red); border-color:var(--red); }
+  .task-cat{
+    flex:0 0 auto; font-size:11.5px; font-weight:700; color:var(--red);
+    background:var(--red-dim); padding:4px 9px; border-radius:2px;
+    letter-spacing:.2px; margin-top:2px; white-space:nowrap;
+  }
+  .task-text{ flex:1 1 auto; line-height:1.6; padding-top:2px; }
+  .task-text.done{ color:var(--fg-dim); text-decoration:line-through; }
+  .task-assignee{
+    flex:0 0 auto; font-size:13px; color:var(--fg-dim); white-space:nowrap; padding-top:3px;
+  }
+  .task-loading{ padding:30px; text-align:center; font-size:14.5px; color:var(--fg-dim); }
+  .task-hint{ font-size:13px; color:var(--fg-dim); margin-top:10px; }
+
+  .tasks-empty{
+    border:1px solid var(--line); background:var(--bg-card);
+    padding:40px 28px; text-align:center; color:var(--fg-dim);
+    font-size:14.5px; line-height:1.9;
+  }
+  .tasks-empty b{ color:var(--fg); }
+  .tasks-empty code{ background:#EFEDE4; padding:1px 5px; border-radius:3px; }
+
+  /* ---------- Footer / edit guide ---------- */
+  details{ max-width:1200px; margin:0 auto 60px; padding:0 28px; }
+  summary{
+    cursor:pointer; font-weight:700; padding:16px 0;
+    border-top:1px solid var(--line); font-size:14px; color:var(--fg-dim);
+  }
+  summary:hover{ color:var(--fg); }
+  details[open] summary{ color:var(--red); }
+  .guide{ background:var(--bg-card); padding:22px 24px; font-size:14px; line-height:1.85; color:var(--fg-dim); }
+  .guide b{ color:var(--fg); }
+  .guide code{ background:#EFEDE4; color:var(--fg); padding:2px 6px; border-radius:3px; font-size:13px; }
+  .guide ol{ padding-left:20px; margin:8px 0; }
+  .guide h4{ color:var(--fg); font-size:14px; margin:20px 0 4px; }
+
+  footer.brand{
+    text-align:center; padding:30px 28px 50px;
+    font-size:12.5px; color:var(--fg-dim); letter-spacing:.4px;
+  }
+
+  @media (max-width:860px){
+    .layout{ flex-direction:column; }
+    .sidebar{ position:static; width:100%; flex-basis:auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="org">민주노총 화섬식품노조 <b>타투유니온지회</b></span>
+  <span class="tag">집행부 전용</span>
+</div>
+
+<section class="year-strip">
+  <div class="year-track" id="yearTrack"></div>
+  <div class="quarter-grid" id="quarterGrid"></div>
+</section>
+
+<header>
+  <h1>타투유니온 지회 업무 허브</h1>
+  <p>이번 달 할 일은 아래에서 바로 확인하고, 자주 쓰는 링크는 왼쪽에서 찾으세요.</p>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input id="search" type="text" placeholder="링크 이름으로 검색" aria-label="링크 검색">
+    <nav id="sidebarNav" aria-label="기본 자료 링크"></nav>
+  </aside>
+
+  <main>
+    <section class="tasks">
+      <div class="section-head">
+        <h2 id="tasksTitle">이번 달 할 일</h2>
+      </div>
+      <div id="tasksBody"></div>
+    </section>
+
+    <section class="roster">
+      <div class="section-head">
+        <h2>집행위원회</h2>
+        <span class="section-sub">지회 임원(회계감사 제외)과 각 부서장으로 구성 (제22조)</span>
+      </div>
+      <div id="rosterBody"></div>
+    </section>
+
+    <section class="auditors">
+      <div class="section-head">
+        <h2>회계감사</h2>
+        <span class="section-sub">임원이지만 집행위원회 구성에서는 제외 (제26조·제22조)</span>
+      </div>
+      <div id="auditorsBody"></div>
+    </section>
+
+    <section class="delegates">
+      <div class="section-head">
+        <h2>대의원회의</h2>
+        <span class="section-sub">집행위원회와 별도로 구성되는 의결기구 (제14조)</span>
+      </div>
+      <div id="delegatesBody"></div>
+    </section>
+  </main>
+</div>
+
+<p style="max-width:1200px; margin:0 auto 40px; padding:0 28px; font-size:13.5px; color:var(--fg-dim); line-height:1.6;">
+  <b style="color:var(--fg);">꼭 기억할 것</b> — 이 페이지는 로그인이 없어서 URL을 아는 사람은 누구나 볼 수 있습니다. 민감한 자료(회의록, 재정 세부 내역 등)는 올리지 마세요.
+</p>
+
+<footer class="brand">TATTOO UNION KOREA · 집행부 허브</footer>
+
+<script>
+/* ============================================================
+   HUB_DATA — 왼쪽 사이드바에 뜨는 링크들.
+   ============================================================ */
+/* ============================================================
+   YEAR_SCHEDULE — 연간 타임라인 바에 표시할 일정.
+   month: 1~12, label: 표시할 이름, url: 있으면 클릭 시 이동(선택)
+   ============================================================ */
+/* ============================================================
+   QUARTER_SCHEDULE — 분기별로만 정해져 있고 정확한 달은 아직
+   없는 정기 일정. 나중에 달이 정해지면 YEAR_SCHEDULE로 옮기세요.
+   ============================================================ */
+const QUARTER_SCHEDULE = {
+  1: ["회계감사", "1년 사업 계획", "정기 총회 & 대의원 대회 준비"],
+  2: ["정기 총회", "정기 대의원 대회 (지부 대의원대회 후 20일 이내)", "지역 조합원 세미나", "수도권 조합원 세미나"],
+  3: ["회계감사", "지역 조합원 세미나", "수도권 조합원 세미나"],
+  4: []
+};
+
+const YEAR_SCHEDULE = [
+  { month: 1, label: "하반기 회계감사", url: "" },
+  { month: 2, label: "사업 계획 수립", url: "" },
+  { month: 3, label: "정기 총회", url: "" },
+  { month: 3, label: "정기 대의원 대회", url: "" },
+  { month: 4, label: "상반기 수도권 조합원 교육 세미나", url: "" },
+  { month: 5, label: "지역 조합원 세미나", url: "" },
+  { month: 7, label: "상반기 회계감사", url: "" },
+  { month: 9, label: "지역 조합원 세미나", url: "" },
+  { month: 10, label: "하반기 수도권 조합원 교육 세미나", url: "" },
+];
+
+/* ============================================================
+   MEMORIAL_DAYS — 매년 정해진 기념일. 각 월 칸 아래쪽에
+   옅은 글씨로 따로 표시됩니다.
+   ============================================================ */
+const MEMORIAL_DAYS = [
+  { month: 3, label: "3.8 세계여성의 날", url: "" },
+  { month: 4, label: "4.28 세계 산재사망 노동자 추모의 날", url: "" },
+  { month: 5, label: "5.1 세계노동절", url: "" },
+  { month: 5, label: "5.18 민주화운동 기념일", url: "" },
+  { month: 8, label: "8.15 광복절", url: "" },
+  { month: 11, label: "11.13 전태일 열사 기일", url: "" },
+];
+
+const HUB_DATA = [
+  {
+    category: "일정",
+    items: [
+      { name: "구글 캘린더", url: "https://calendar.google.com/", note: "회의·행사 일정" }
+    ]
+  },
+  {
+    category: "지출 정산",
+    items: [
+      { name: "2026 상반기 임원 사전결제 내역", url: "https://docs.google.com/spreadsheets/d/1KfJcxFi-b-ov4ScVjy9ae4UQHqLmxJFy9MOF64MYRRY/edit?gid=592449152#gid=592449152", note: "선지출 후 정산 신청" }
+    ]
+  },
+  {
+    category: "자료 · 문서",
+    items: [
+      { name: "지회 규칙", url: "tattoounion_rules.html", note: "2020.2.27 제정 · 조항별 정리" },
+      // 화섬식품노조 규약 링크 준비되면 여기 추가
+    ]
+  },
+  {
+    category: "공식 채널",
+    items: [
+      { name: "타투유니온 웹사이트", url: "https://tattoounionkorea.github.io/", note: "" },
+      { name: "조합원 카페", url: "https://cafe.naver.com/tattoounionkorea/", note: "" },
+      { name: "유튜브 채널", url: "https://www.youtube.com/@koreatattoounion8292", note: "" },
+      { name: "그린랩 웹사이트", url: "https://greenlabstudio.github.io/", note: "" }
+    ]
+  }
+];
+
+/* ============================================================
+   TASKS_CONFIG — 이번 달 할 일 체크리스트 설정.
+   구글시트 데이터를 직접 불러와서 이 페이지 디자인 그대로 렌더링합니다
+   (구글시트 화면을 그대로 보여주는 게 아니라, 데이터만 가져와서
+   이 페이지 스타일로 다시 그리는 방식이에요).
+   시트 열 순서는 [구분, 할 일, 완료(체크박스), 담당] 이어야 합니다.
+   sheetId를 비워두면 안내 문구만 보입니다.
+   ============================================================ */
+const TASKS_CONFIG = {
+  monthLabel: "이번 달 할 일",
+  sheetId: "1hJWlQBouA9Umtpy9mi1uBZj9Rv33wncuHrXq0JEmbJ4",
+  gid: "0",
+  openUrl: "https://docs.google.com/spreadsheets/d/1hJWlQBouA9Umtpy9mi1uBZj9Rv33wncuHrXq0JEmbJ4/edit?usp=sharing"
+};
+
+/* ============================================================
+   ROSTER_DATA — 집행위원회 (제22조: 임원(회계감사 제외) + 부서장).
+   회계감사는 별도 기구 취급이라 auditors로 분리돼 있습니다.
+   ============================================================ */
+const ROSTER_DATA = {
+  committee: [
+    { role: "지회장", name: "김도윤", handle: "tattooist_doy" },
+    { role: "수석부지회장", name: "이소미", handle: "leeso_tattoo" },
+    { role: "사무장", name: "황수경", handle: "hwangdoh.tattoo" },
+    { role: "교육부장", name: "이찬영", handle: "tattooist_namoo" },
+    { role: "홍보부장", name: "김남령", handle: "2.s.u.m" },
+    { role: "조직부장", name: "김법승", handle: "beopkimm" }
+  ],
+  auditors: [
+    { role: "회계감사", name: "한지현", handle: "haneum_farbe" },
+    { role: "회계감사", name: "민시우", handle: "right.rain_tt" }
+  ]
+};
+
+/* ============================================================
+   DELEGATE_DATA — 대의원회의. 집행부와는 별도 기구입니다 (제14조).
+   stats: 배정/미선임/재적 인원수. 숫자만 바꾸면 반영됩니다.
+   ============================================================ */
+const DELEGATE_DATA = {
+  stats: { assigned: 27, vacant: 20, active: 7 },
+  members: [
+    { role: "대의원", name: "최준혁", handle: "horigyo" },
+    { role: "대의원", name: "정희준", handle: "hyosi.tatt" },
+    { role: "대의원", name: "이윤효", handle: "seohwa_tattoo90" },
+    { role: "대의원", name: "오현", handle: "oh_stella_oh" },
+    { role: "대의원", name: "정수민", handle: "tattooist.haneul" },
+    { role: "대의원", name: "정은수", handle: "yerangtattoo" },
+    { role: "대의원", name: "김훈", handle: "uncogrim" }
+  ]
+};
+
+/* ---------------- 렌더링 로직 (건드릴 필요 없음) ---------------- */
+const sidebarNav = document.getElementById('sidebarNav');
+const searchEl = document.getElementById('search');
+
+function sideLinkHTML(item){
+  return `
+  <a class="side-link" href="${item.url}" target="_blank" rel="noopener noreferrer" data-name="${item.name.toLowerCase()}">
+    <span>${item.name}${item.note ? `<br><span class="note">${item.note}</span>` : ''}</span>
+    <span class="arrow">→</span>
+  </a>`;
+}
+
+function sideEmptyHTML(){
+  return `<div class="side-empty">아직 없음. <code>HUB_DATA</code>에 항목을 추가하세요.</div>`;
+}
+
+function renderSidebar(){
+  sidebarNav.innerHTML = HUB_DATA.map(sec => `
+    <div class="cat-block" data-cat="${sec.category}">
+      <div class="cat-label">${sec.category}</div>
+      ${sec.items.length ? sec.items.map(sideLinkHTML).join('') : sideEmptyHTML()}
+    </div>
+  `).join('');
+}
+
+searchEl.addEventListener('input', () => {
+  const q = searchEl.value.trim().toLowerCase();
+  document.querySelectorAll('.cat-block').forEach(block => {
+    let any = false;
+    block.querySelectorAll('.side-link').forEach(link => {
+      const show = !q || link.dataset.name.includes(q);
+      link.style.display = show ? '' : 'none';
+      if(show) any = true;
+    });
+    const empty = block.querySelector('.side-empty');
+    if(empty) empty.style.display = q ? 'none' : '';
+    block.style.display = (any || (!q && empty)) ? '' : 'none';
+  });
+});
+
+function taskFallbackHTML(){
+  return `<div class="task-loading">체크리스트를 불러오지 못했어요.${TASKS_CONFIG.openUrl ? ` <a href="${TASKS_CONFIG.openUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--red);">원본 시트에서 확인하기 →</a>` : ''}</div>`;
+}
+
+function renderTasks(){
+  document.getElementById('tasksTitle').textContent = TASKS_CONFIG.monthLabel;
+  const body = document.getElementById('tasksBody');
+  if(!TASKS_CONFIG.sheetId){
+    body.innerHTML = `
+      <div class="tasks-empty">
+        <b>아직 체크리스트가 연결되지 않았어요.</b><br>
+        구글시트로 할 일 목록을 만든 다음, 이 파일 아래쪽 <code>TASKS_CONFIG</code>에
+        <code>sheetId</code>를 넣어주세요.
+      </div>`;
+    return;
+  }
+
+  body.innerHTML = `<div class="task-list" id="taskList"><div class="task-loading">불러오는 중…</div></div>
+    <div class="task-hint">체크 표시는 시트에서 실시간으로 반영돼요. 이 화면에서 직접 체크할 순 없어요.</div>`;
+
+  const callbackName = 'hubTasksCallback_' + Math.random().toString(36).slice(2);
+  window[callbackName] = function(data){
+    const listEl = document.getElementById('taskList');
+    try {
+      const rows = data.table.rows || [];
+      if(!rows.length){
+        listEl.innerHTML = `<div class="task-loading">등록된 할 일이 없어요.</div>`;
+      } else {
+        const parsed = rows.map((r, i) => {
+          const c = r.c || [];
+          return {
+            cat: (c[0] && c[0].v) || '',
+            text: (c[1] && c[1].v) || '',
+            done: !!(c[2] && c[2].v === true),
+            assignee: (c[3] && c[3].v) || '',
+            order: i
+          };
+        });
+        // 미완료 항목을 위로, 완료된 항목은 아래로 (각 그룹 안에서는 시트 순서 유지)
+        parsed.sort((a, b) => (a.done === b.done) ? (a.order - b.order) : (a.done ? 1 : -1));
+        listEl.innerHTML = parsed.map(({cat, text, done, assignee}) => {
+          return `
+            <div class="task-row">
+              <span class="task-check${done ? ' done' : ''}">${done ? '✓' : ''}</span>
+              ${cat ? `<span class="task-cat">${cat}</span>` : ''}
+              <span class="task-text${done ? ' done' : ''}">${text}</span>
+              ${assignee ? `<span class="task-assignee">${assignee}</span>` : ''}
+            </div>`;
+        }).join('');
+      }
+    } catch(e){
+      listEl.innerHTML = taskFallbackHTML();
+    }
+    delete window[callbackName];
+    script.remove();
+  };
+
+  const script = document.createElement('script');
+  script.src = `https://docs.google.com/spreadsheets/d/${TASKS_CONFIG.sheetId}/gviz/tq?tqx=out:json;responseHandler:${callbackName}&gid=${TASKS_CONFIG.gid}`;
+  script.onerror = function(){
+    const listEl = document.getElementById('taskList');
+    if(listEl) listEl.innerHTML = taskFallbackHTML();
+  };
+  document.body.appendChild(script);
+}
+
+function igUrl(handle){ return `https://www.instagram.com/${handle}/`; }
+
+function rosterRows(list){
+  return list.map(p => `
+    <div class="roster-row">
+      <span class="roster-role">${p.role}</span>
+      <span class="roster-name">${p.name}</span>
+      <a class="roster-handle" href="${igUrl(p.handle)}" target="_blank" rel="noopener noreferrer">@${p.handle}</a>
+    </div>
+  `).join('');
+}
+
+function rosterBlock(label, list, note){
+  return `
+    <div class="roster-block">
+      <div class="roster-group-label">${label}</div>
+      ${note ? `<div class="roster-note">${note}</div>` : ''}
+      <div class="roster-committee">${rosterRows(list)}</div>
+    </div>`;
+}
+
+function renderRoster(){
+  document.getElementById('rosterBody').innerHTML = `
+    <div class="roster-block">
+      <div class="roster-committee">${rosterRows(ROSTER_DATA.committee)}</div>
+    </div>
+  `;
+}
+
+function renderAuditors(){
+  document.getElementById('auditorsBody').innerHTML = `
+    <div class="roster-block">
+      <div class="roster-committee">${rosterRows(ROSTER_DATA.auditors)}</div>
+    </div>
+  `;
+}
+
+function renderDelegates(){
+  const s = DELEGATE_DATA.stats;
+  const sortedMembers = [...DELEGATE_DATA.members].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+  const statsHTML = `
+    <div class="delegate-stats">
+      <span><b>${s.assigned}</b>명 배정대의원</span>
+      <span><b>${s.vacant}</b>명 미선임</span>
+      <span><b>${s.active}</b>명 재적대의원</span>
+    </div>`;
+  document.getElementById('delegatesBody').innerHTML = `
+    <div class="roster-block">
+      <div class="roster-group-label">대의원 (임기 2년)</div>
+      ${statsHTML}
+      <div class="roster-note">각 권역(제주권, 강원권, 호남권, 영남권, 충청권, 수도권)에서 지회 조합원 수 20명 기준 1명씩 선출 (제17조)</div>
+      <div class="roster-committee">${rosterRows(sortedMembers)}</div>
+    </div>
+  `;
+}
+
+function renderYearStrip(){
+  const now = new Date();
+  const curMonth = now.getMonth() + 1;
+  const track = document.getElementById('yearTrack');
+
+  let trackHTML = '';
+  for(let m = 1; m <= 12; m++){
+    const events = YEAR_SCHEDULE.filter(e => e.month === m);
+    const memorials = MEMORIAL_DAYS.filter(e => e.month === m);
+
+    const eventsList = events.length
+      ? `<ul class="m-events">${events.map(e => `<li>${e.url
+          ? `<a href="${e.url}" target="_blank" rel="noopener noreferrer" style="color:inherit;">${e.label}</a>`
+          : e.label}</li>`).join('')}</ul>`
+      : '';
+    const memorialList = memorials.length
+      ? `<ul class="m-memorial">${memorials.map(e => `<li>${e.label}</li>`).join('')}</ul>`
+      : '';
+    const body = (eventsList || memorialList) ? `${eventsList}${memorialList}` : `<div class="m-empty">–</div>`;
+
+    trackHTML += `
+      <div class="year-cell${m === curMonth ? ' current' : ''}">
+        <div class="m-label">${m}월</div>
+        ${body}
+      </div>`;
+  }
+  track.innerHTML = trackHTML;
+}
+
+function renderQuarterGrid(){
+  const ranges = { 1:"1~3월", 2:"4~6월", 3:"7~9월", 4:"10~12월" };
+  const grid = document.getElementById('quarterGrid');
+  grid.innerHTML = [1,2,3,4].map(q => {
+    const items = QUARTER_SCHEDULE[q] || [];
+    const list = items.length
+      ? `<ul class="q-list">${items.map(t => `<li>${t}</li>`).join('')}</ul>`
+      : `<div class="q-empty">등록된 정기 일정 없음</div>`;
+    return `
+      <div class="quarter-col">
+        <div class="q-title">${q}분기</div>
+        <div class="q-range">${ranges[q]}</div>
+        ${list}
+      </div>`;
+  }).join('');
+}
+
+renderYearStrip();
+renderQuarterGrid();
+renderSidebar();
+renderTasks();
+renderRoster();
+renderAuditors();
+renderDelegates();
+</script>
+</body>
+</html>

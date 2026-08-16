@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지회 규칙 — 타투유니온</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<style>
+  :root{
+    --bg:#FAFAF7;
+    --bg-card:#FFFFFF;
+    --bg-card-hover:#F4F2EC;
+    --fg:#141414;
+    --fg-dim:#6C6A63;
+    --red:#D6291F;
+    --red-dim:#F3C6C2;
+    --line:#E3E0D6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Pretendard Variable','Noto Sans KR',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto; } }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; border-bottom:1px solid var(--line);
+  }
+  .topbar .org{ font-size:12px; color:var(--fg-dim); letter-spacing:.3px; }
+  .topbar .org b{ color:var(--fg); }
+  .topbar a.back{
+    font-size:12px; color:var(--fg-dim); text-decoration:none; font-weight:700;
+  }
+  .topbar a.back:hover{ color:var(--red); }
+
+  header{ padding:48px 28px 28px; max-width:1200px; margin:0 auto; }
+  h1{
+    font-size:clamp(26px,4vw,36px); font-weight:900; line-height:1.25;
+    margin:0 0 10px; letter-spacing:-0.4px;
+  }
+  header p{ font-size:14px; color:var(--fg-dim); margin:0; line-height:1.6; }
+
+  .layout{
+    max-width:1200px; margin:0 auto; padding:8px 28px 100px;
+    display:flex; align-items:flex-start; gap:36px;
+  }
+  .toc{ flex:0 0 240px; position:sticky; top:24px; }
+  .toc-label{
+    font-size:11px; font-weight:700; color:var(--fg-dim);
+    letter-spacing:.6px; text-transform:uppercase;
+    margin-bottom:8px; padding-bottom:8px; border-bottom:2px solid var(--fg);
+  }
+  .toc a{
+    display:block; padding:7px 4px; text-decoration:none; color:var(--fg);
+    font-size:12.5px; font-weight:500; border-left:2px solid transparent;
+  }
+  .toc a:hover{ border-left-color:var(--red); padding-left:10px; background:var(--bg-card-hover); }
+  .toc .toc-sub{ padding-left:14px; }
+  .toc .toc-sub a{ font-size:11.5px; color:var(--fg-dim); padding:5px 4px; }
+
+  main{ flex:1 1 auto; min-width:0; }
+
+  .chapter{ margin-bottom:44px; scroll-margin-top:20px; }
+  .chapter-title{
+    font-size:19px; font-weight:900; margin:0 0 16px; padding-bottom:12px;
+    border-bottom:2px solid var(--fg); letter-spacing:-0.2px;
+  }
+  .section-title{
+    font-size:14px; font-weight:700; color:var(--red);
+    margin:26px 0 12px; scroll-margin-top:20px;
+  }
+
+  .article{
+    background:var(--bg-card); border:1px solid var(--line);
+    padding:16px 20px; margin-bottom:12px;
+  }
+  .article h4{
+    font-size:14px; font-weight:700; margin:0 0 8px; color:var(--fg);
+  }
+  .article p{ font-size:13.5px; line-height:1.7; margin:0 0 6px; color:var(--fg); }
+  .article p:last-child{ margin-bottom:0; }
+
+  ol.list-num{
+    list-style:none; counter-reset:item; padding-left:0; margin:8px 0 0;
+  }
+  ol.list-num > li{
+    counter-increment:item; margin-bottom:6px; padding-left:22px;
+    position:relative; font-size:13.5px; line-height:1.7;
+  }
+  ol.list-num > li::before{
+    content:counter(item) ". "; position:absolute; left:0;
+    color:var(--red); font-weight:700;
+  }
+  ol.list-num > li:last-child{ margin-bottom:0; }
+
+  ol.list-paren{
+    list-style:none; counter-reset:pitem; padding-left:6px; margin:6px 0 0;
+  }
+  ol.list-paren > li{
+    counter-increment:pitem; margin-bottom:4px; padding-left:26px;
+    position:relative; font-size:13px; line-height:1.65; color:var(--fg-dim);
+  }
+  ol.list-paren > li::before{
+    content:counter(pitem) ") "; position:absolute; left:0; color:var(--fg-dim);
+  }
+  ol.list-paren > li:last-child{ margin-bottom:0; }
+
+  .preamble{
+    background:var(--bg-card); border:1px solid var(--line);
+    padding:18px 20px; margin:20px 0 32px; font-size:13px; color:var(--fg-dim); line-height:1.7;
+  }
+
+  .enact-block{
+    text-align:center; padding:36px 0 8px; font-size:13px; color:var(--fg-dim); line-height:1.9;
+  }
+  .enact-block b{ color:var(--fg); }
+
+  @media (max-width:860px){
+    .layout{ flex-direction:column; }
+    .toc{ position:static; width:100%; flex-basis:auto; }
+  }
+
+  footer.brand{
+    text-align:center; padding:30px 28px 50px;
+    font-size:11px; color:var(--fg-dim); letter-spacing:.4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="org">민주노총 화섬식품노조 <b>타투유니온지회</b></span>
+  <a class="back" href="tattoounionhub_22.html">← 업무 허브로 돌아가기</a>
+</div>
+
+<header>
+  <h1>전국화학섬유식품산업노동조합 타투유니온지회 규칙</h1>
+  <p>2020년 2월 27일 제정. 조합 규약 제39조와 지부규정 부칙 제4조에 의거하여, 지회의 운영과 조직에 필요한 사항을 정한 규칙 전문입니다.</p>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="목차">
+    <div class="toc-label">목차</div>
+    <a href="#ch1">제1장 총칙</a>
+    <a href="#ch2">제2장 조직</a>
+    <a href="#ch3">제3장 권리와 의무</a>
+    <a href="#ch4">제4장 기구 및 회의</a>
+    <div class="toc-sub">
+      <a href="#sec4-1">제1절 총회</a>
+      <a href="#sec4-2">제2절 대의원회의</a>
+      <a href="#sec4-3">제3절 운영위원회</a>
+      <a href="#sec4-4">제4절 집행위원회</a>
+      <a href="#sec4-5">제5절 회의</a>
+    </div>
+    <a href="#ch5">제5장 임원 및 부서</a>
+    <a href="#ch6">제6장 단체교섭</a>
+    <a href="#ch7">제7장 재정 및 기타</a>
+    <a href="#ch8">제8장 표창·징계 및 신분보장</a>
+    <a href="#buchik">부칙</a>
+  </nav>
+
+  <main>
+
+    <section class="chapter" id="ch1">
+      <h2 class="chapter-title">제1장 총칙</h2>
+
+      <div class="article">
+        <h4>제1조(제정목적)</h4>
+        <p>이 규칙은 전국화학섬유산업노동조합(이하 조합, 약칭 화섬식품노조) 규약 제39조와 지부규정 부칙 제4조에 의거하여 지회의 합리적 운영과 조직강화를 도모하며, 지회의 제반 문제를 보다 신속하고 효율적으로 처리하기 위해 지회의 기능과 운영에 필요한 사항을 정함을 목적으로 한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제2조(명칭)</h4>
+        <p>지회는 화섬식품노조 타투유니온지회라 한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제3조(사무소)</h4>
+        <p>지회의 주 사무소는 서울에 두며, 지회장이 근무하는 사무소를 부 사무소로 칭한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제4조(활동)</h4>
+        <p>지회는 조합 및 지부의 사업과 목적을 위해 활동한다.</p>
+        <ol class="list-num">
+          <li>규약에 명시된 목적과 사업을 수행하기 위한 활동</li>
+          <li>조합, 지부 의결기구의 의결사항과 지시 사항 집행</li>
+          <li>조합, 지부와 유기적인 관계를 통한 조합 활동의 활성화, 조직강화, 투쟁력 강화 활동</li>
+          <li>지회의 특수한 사정을 반영해 수행해야 할 활동</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제5조(운영)</h4>
+        <p>지회는 조합의 규약과 각종 규정, 지부의 규칙에 위반되지 않는 범위 내에서 필요에 따라 지회규정을 제정할 수 있다.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch2">
+      <h2 class="chapter-title">제2장 조직</h2>
+
+      <div class="article">
+        <h4>제6조(범위 및 구성)</h4>
+        <p>조합 규약에 따라 가입승인을 얻은 타투이스트 및 관련 산업에 종사하는 자로 구성한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제7조(가입·탈퇴 절차)</h4>
+        <p>조합 규약 및 지부규정에 의거하고 조합의 전결처리 규정에 따른다.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch3">
+      <h2 class="chapter-title">제3장 권리와 의무</h2>
+
+      <div class="article">
+        <h4>제8조(권리)</h4>
+        <p>지회 조합원은 조합 규약 제9조에서 정한 권리를 지회에서도 행사할 수 있으며, 규약과 지부 규정, 지회규칙에 의하지 않고는 그 권리를 제한받지 않는다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제9조(의무)</h4>
+        <p>지회 조합원의 의무는 다음과 같다.</p>
+        <ol class="list-num">
+          <li>조합의 강령과 규약, 규정 및 지부, 지회규칙을 준수할 의무</li>
+          <li>지회의 각종회의 및 활동에 참가할 의무</li>
+          <li>조합과 지부, 지회에서 결정한 사항을 준수할 의무</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch4">
+      <h2 class="chapter-title">제4장 기구 및 회의</h2>
+
+      <div class="article">
+        <h4>제10조(기구)</h4>
+        <p>지회에는 다음의 기구를 둘 수 있다.</p>
+        <ol class="list-num">
+          <li>총회</li>
+          <li>대의원회의</li>
+          <li>운영위원회</li>
+          <li>집행위원회</li>
+          <li>감사위원회</li>
+          <li>선거관리위원회</li>
+          <li>기타 규약, 규정 및 지회규칙에 정한 위원회를 둘 수 있다.</li>
+        </ol>
+      </div>
+
+      <h3 class="section-title" id="sec4-1">제1절 총회</h3>
+
+      <div class="article">
+        <h4>제11조(구성 및 소집)</h4>
+        <ol class="list-num">
+          <li>총회는 지회의 최고 의결기관으로 지회 조합원 전원으로 구성하며, 정기총회는 지부 대의원대회 개최 후 20일 이내에 개최한다.</li>
+          <li>총회소집은 지회장이 필요하다고 판단되는 경우 또는 지회 대의원 혹은 조합원의 3분의 1 이상이 회의에 부의할 사항을 명기한 요청서를 제출하였을 시 7일 이내에 이를 소집하여야 한다.</li>
+          <li>위원장이 필요하다고 판단할 경우 위원장이 소집하고, 지부장이 필요하다고 판단할 경우 지부장이 소집한다. 단, 이때 회의의 의장은 위원장 또는 지부장이 되거나, 위원장 또는 지부장이 지명한 자가 된다.</li>
+          <li>2항의 규정에도 불구하고 기간 내 지회장이 총회를 소집하지 않을 때에는 위원장의 승인을 받아 지부장이 소집권자를 지명할 수 있다.</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제12조(소집공고)</h4>
+        <p>지회 총회 소집공고는 회의일로부터 7일전에 회의 장소와 회의에 부의할 사항을 제시하여 공고하여야 하며, 공고사항을 변경하고자 할 경우에는 3일간의 공고기간을 두어야 한다. 단, 긴급을 요할 경우에는 24시간 전에 할 수 있다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제13조(의결사항)</h4>
+        <p>의결사항은 다음과 같다. 단, 조합 및 지부의 의결사항에 반하는 결정을 할 수 없으며, 1항~2항을 제외한 사항은 대의원회의로 갈음할 수 있다.</p>
+        <ol class="list-num">
+          <li>지회 임원 선출 및 불신임에 관한 사항</li>
+          <li>지회 교섭 관련 잠정합의안 가결</li>
+          <li>조합 및 지부에서 위임된 지회 단체행동 결의에 관한 사항</li>
+          <li>지회 대의원회의에서 상정한 사항 또는 제12조 2항에 의해 상정된 사항</li>
+          <li>지회의 규칙 제정 및 개정에 관한 사항</li>
+          <li>기타 중요한 사항</li>
+        </ol>
+      </div>
+
+      <h3 class="section-title" id="sec4-2">제2절 대의원회의</h3>
+
+      <div class="article">
+        <h4>제14조(구성 및 소집)</h4>
+        <p>지회 대의원회의는 다음과 같다.</p>
+        <ol class="list-num">
+          <li>대의원회의는 지회 총회 다음가는 의결기관으로 지부 대의원(지회 임원과 집행위원 제외)과 지회 조합원(해당 분회)의 직접, 비밀, 무기명투표에 의해 선출된 대의원으로 구성되며, 정기대의원회의는 지부의 대의원대회 후 20일 이내에 지회장이 소집한다.</li>
+          <li>
+            임시대의원회의는 지회장이 필요하다고 인정될 때 또는 다음 각 호에 해당되는 소집요청이 있을 경우, 지회장은 소집요청서를 받은 날로부터 3일 이내에 소집한다.
+            <ol class="list-paren">
+              <li>운영위원회의 의결이 있을 때</li>
+              <li>대의원의 3분의1 이상이 회의에 부의할 사항을 명기한 소집요청서를 제출받았을 때</li>
+              <li>전호의 규정에도 불구하고 기간 내 지회장이 대의원대회를 소집하지 않을 때에는 위원장의 승인을 받아 지부장이 소집권자를 지명할 수 있다.</li>
+            </ol>
+          </li>
+          <li>위원장이 필요하다고 판단할 경우 위원장이 소집하고, 지부장이 필요하다고 판단할 경우 지부장이 소집한다. 단, 이때 회의의 의장은 위원장 또는 지부장이 되거나, 위원장 또는 지부장이 지명한 자가 된다.</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제15조(소집공고)</h4>
+        <p>지회 대의원회의 소집공고는 소집일 7일전에 회의 장소와 회의에 부의할 사항을 제시하여 공고하여야 하며, 공고사항을 변경하고자 할 경우에는 3일간의 공고기간을 두어야 한다. 단, 긴급을 요할 경우에는 24시간 전에 소집할 수 있다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제16조(임기)</h4>
+        <ol class="list-num">
+          <li>대의원의 임기는 2년을 원칙으로 한다. 단, 차기 대의원 선출일 전일까지로 한다.</li>
+          <li>보궐선거로 당선된 대의원의 임기는 전임자 잔여임기로 한다.</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제17조(대의원 선출)</h4>
+        <p>지회 대의원 선출기준은 다음과 같다.</p>
+        <ol class="list-num">
+          <li>지회 대의원 선출은 각 권역(제주권, 강원권, 호남권, 영남권, 충청권, 수도권)에서 지회 조합원수 20명을 기준으로 1명을 선출, 단위수 15명을 초과할 시 1명을 추가 선출할 수 있다. 단, 20명 미만의 분회는 1명을 선출할 수 있다.</li>
+          <li>지부대의원은 당연히 지회 대의원이 된다. 단, 지회임원과 집행위원은 제외한다.</li>
+          <li>지회 대의원 선출은 조합, 지부 대의원 선거와 같이 할 수 있다.</li>
+          <li>대의원 임기 중 결원이 발생할 경우 즉시 보선한다. 임기가 6개월 미만일 경우는 재적성원 중 제외한다.</li>
+          <li>지회 대의원 선출과 선거구획에 관한 사항은 지회 운영위원회에서 결정한다.</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제18조(대의원회의 기능)</h4>
+        <p>지회 대의원회의 기능은 다음과 같다. 단, 조합 및 지부의 의결사항에 반하는 결정을 할 수 없다.</p>
+        <ol class="list-num">
+          <li>지회의 사업계획 수립에 관한 사항</li>
+          <li>지회 예산 승인 및 결산 보고에 관한 사항</li>
+          <li>지회의 분할 및 합병 건의에 관한 사항</li>
+          <li>지회의 특별부과금 결정에 관한 사항</li>
+          <li>지회의 기금 및 자산의 관리 또는 처분에 관한 사항</li>
+          <li>조합 및 지부에서 위임한 단체교섭에 관한 사항</li>
+          <li>지회 단체행동 대책에 관한 사항</li>
+          <li>지부 의결기관에 상정할 의안채택에 관한 사항</li>
+          <li>지부 대의원대회나 운영위원회 및 집행위원회에서 위임한 사항</li>
+          <li>기타 중요한 사항</li>
+        </ol>
+      </div>
+
+      <h3 class="section-title" id="sec4-3">제3절 운영위원회</h3>
+
+      <div class="article">
+        <h4>제19조(구성 및 임기)</h4>
+        <p>지회 운영위원회를 둘 수 있으며 지회 임원과 권역별로 선출된 운영위원으로 구성하고, 선출된 운영위원의 임기는 대의원 임기와 동일하게 적용한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제20조(소집)</h4>
+        <p>회의는 지회장이 필요하다고 인정할 때 또는 집행위원회의 의결이나 운영위원 3분의 1이상이 요구할 때 소집한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제21조(기능)</h4>
+        <p>지회 운영위원회는 다음 사항을 심의 결정한다. 단, 조합 및 지부의 의결사항에 반하는 결정을 할 수 없다.</p>
+        <ol class="list-num">
+          <li>지회 총회 및 대의원회의의 수임 사항</li>
+          <li>지회 세칙 제정 및 개정에 관한 사항</li>
+          <li>지회 규칙 및 각종 세칙 해석에 관한 사항</li>
+          <li>지회 교섭위원 선출에 관한 사항</li>
+          <li>지회 조합원 징계 및 표창 건의에 관한 사항</li>
+          <li>지회의 특별기금 부과에 관한 사항</li>
+          <li>지회 예산 목간 전용 승인</li>
+          <li>조합신분보장 규정에 따른 지회 조합원 신분보장 심의 및 건의에 관한 사항</li>
+          <li>지회장 유고시 직무대행 선임에 관한 사항</li>
+          <li>지회 대책위원회 및 특별위원회 구성에 관한 사항</li>
+          <li>기타 중요한 사항</li>
+        </ol>
+      </div>
+
+      <h3 class="section-title" id="sec4-4">제4절 집행위원회</h3>
+
+      <div class="article">
+        <h4>제22조(구성 및 소집)</h4>
+        <p>집행위원회는 지회 임원(회계감사 제외), 지회 각 부서장으로 구성하고, 회의는 지회장이 필요하다고 인정할 때 또는 집행위원 3분의 1이상이 요구할 때 지회장이 소집한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제23조(기능)</h4>
+        <p>지회 집행위원회의 기능은 다음과 같다.</p>
+        <ol class="list-num">
+          <li>지회 총회, 대의원회의와 운영위원회 수임사항 집행</li>
+          <li>지회의 각종회의에 상정할 안건 및 회의준비</li>
+          <li>조합 및 지부의 의결 및 지시 집행에 관한 사항</li>
+          <li>제반 지부 및 지회 업무집행에 관한 사항</li>
+        </ol>
+      </div>
+
+      <h3 class="section-title" id="sec4-5">제5절 회의</h3>
+
+      <div class="article">
+        <h4>제24조(회의 성립과 결의)</h4>
+        <p>지회 각종회의는 별도로 정하지 않는 한 재적인원 과반수의 출석과 출석인원 과반수 찬성으로 결의한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제25조(회의진행)</h4>
+        <p>지회의 각종 회의 의장은 지회장이 되며 지회장의 위임에 따라 다른 임원이 대리할 수 있다.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch5">
+      <h2 class="chapter-title">제5장 임원 및 부서</h2>
+
+      <div class="article">
+        <h4>제26조(임원)</h4>
+        <p>지회에는 다음 임원을 둘 수 있다.</p>
+        <ol class="list-num">
+          <li>지회장</li>
+          <li>수석부지회장, 부지회장 약간명</li>
+          <li>사무장</li>
+          <li>회계감사</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제27조(임무)</h4>
+        <p>지회 임원의 임무는 다음과 같다.</p>
+        <ol class="list-num">
+          <li>
+            지회장
+            <ol class="list-paren">
+              <li>지회를 대표하고 제반업무를 총괄한다.</li>
+              <li>지회 공문서 및 제 증명서의 서명인이 된다.</li>
+              <li>지회의 각종회의를 소집하고 의장이 된다.</li>
+              <li>지회 재정의 집행권자가 된다.</li>
+              <li>지회 각부·차장의 임면제청권을 갖는다.</li>
+              <li>각종 출판물의 발행인이 된다.</li>
+            </ol>
+          </li>
+          <li>수석 부지회장 — 지회장을 보좌하며, 지회장 유고시 지회장의 임무를 대행한다.</li>
+          <li>
+            사무장
+            <ol class="list-paren">
+              <li>지회장의 지시를 받아 지회의 제반업무를 관장한다.</li>
+              <li>예산을 집행하고 기금, 자산 및 현금을 관장한다.</li>
+              <li>각종회의의 자료를 작성할 책임과 질의에 응하며 업무에 대하여 보고한다.</li>
+              <li>회계감사에 응한다.</li>
+            </ol>
+          </li>
+          <li>부지회장 — 지회장, 수석부지회장을 보좌하며, 각 권역의 조합원의 소통과 단결을 촉진한다.</li>
+          <li>
+            회계감사
+            <ol class="list-paren">
+              <li>지회의 재산과 조합비 및 업무집행 사항을 감사한다.</li>
+              <li>회계감사는 조합원(대의원) 1/3이상의 감사요청이 있을 시는 이를 지체없이 행하여야 한다.</li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제28조(선출)</h4>
+        <p>지회 임원 중 지회장·수석부지회장·사무장은 조합원의 직접, 비밀, 무기명투표에 의하여 재적조합원 과반수 투표와 참석한 조합원의 과반수 득표로 선출한다. 부지회장과 회계감사는 대의원회의에서 직접, 비밀, 무기명 투표로 선출한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제29조(임원의 보궐선거)</h4>
+        <ol class="list-num">
+          <li>지회 임원 유고시에 그 잔여임기가 6개월 이상일 경우 가능한 신속히 임원을 보선해야 한다.</li>
+          <li>보선된 임원의 임기는 전임자의 잔여기간으로 한다.</li>
+          <li>유고된 임원의 잔여임기가 6개월 미만일 때는 보선을 하지 않고 직무대행을 선임한다.</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제30조(임기)</h4>
+        <p>임원의 임기는 3년으로 하고, 보선된 임원의 임기는 전임자의 잔여 기간으로 한다.</p>
+        <ol class="list-num">
+          <li>지회장의 사임, 퇴사, 사망으로 공석일 경우 그 잔여 임기가 6개월 이상일 경우에는 보궐선거를 실시한다.</li>
+          <li>수석부지회장, 사무장이 사임, 퇴사, 사망으로 공석일 경우 지회장의 추천에 의해 대의원회의의 인준을 얻어 선출한다.</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제31조(임원의 탄핵)</h4>
+        <ol class="list-num">
+          <li>임원은 그 직무수행에 있어서 조합의 강령, 규약, 지부 규정, 지부의 운영규칙, 지회의 운영규칙을 위반하였을 때는 지회 총회의 의결을 거쳐 탄핵할 수 있다.</li>
+          <li>탄핵소추는 대의원 3분의 1 또는 조합원 3분의 1 이상의 요청으로 발의되고 과반수 참석(투표)과 참석(투표) 조합원 3분의 2 이상의 찬성으로 탄핵된다.</li>
+        </ol>
+      </div>
+
+      <div class="article">
+        <h4>제32조(부서)</h4>
+        <p>지회는 업무 집행을 위해 필요한 부서를 둘 수 있다.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch6">
+      <h2 class="chapter-title">제6장 단체교섭</h2>
+
+      <div class="article">
+        <h4>제33조(단체교섭)</h4>
+        <p>지회의 단체교섭은 조합 및 지부의 방침에 따른다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제34조(각종 협약의 체결)</h4>
+        <p>지회의 단체협약은 규약과 본조 및 지부의 방침에 따르되 위원장의 위임에 의하여 체결할 수 있다. 단, 지회 총회를 거쳐 위원장의 승인을 얻은 후 교섭위원 연명으로 서명하여 체결한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제35조(단체행동)</h4>
+        <p>지회에서 단체행동이 필요한 경우, 대의원회의를 통해 결의하여 진행할 수 있다.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch7">
+      <h2 class="chapter-title">제7장 재정 및 기타</h2>
+
+      <div class="article">
+        <h4>제36조(재정)</h4>
+        <p>지회의 재정은 조합의 교부금과 지회 기부금, 특별부과금, 기타 사업수익 및 잡수익으로 충당한다. 조합비는 조합 대의원대회에서 정한대로 납부하고, 상회하는 금액은 조합 의결기구의 별도 지침이 있기 전까지는 현행대로 징수한다. 단, 상회분은 지회 자체 재정으로 한다. (기존의 각종 기금도 동일하게 징수하고 운용한다)</p>
+      </div>
+
+      <div class="article">
+        <h4>제37조(회계구분)</h4>
+        <p>지회의 회계는 일반회계와 특별회계로 구분한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제38조(회계년도)</h4>
+        <p>지회의 회계연도는 매년 1월 1일에서 12월 31일까지로 한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제39조(감사)</h4>
+        <p>회계 및 업무상의 적정여부는 감사위원이 연 2회 이상 감사하고, 감사위원은 감사보고서를 작성하여 감사결과를 대의원회의에 보고한다. 필요시 대의원회의의 의결로 조합 또는 지부 감사위원회에 감사를 의뢰할 수 있다.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch8">
+      <h2 class="chapter-title">제8장 표창·징계 및 신분보장</h2>
+
+      <div class="article">
+        <h4>제40조(표창)</h4>
+        <p>조합원이 조합의 활동에 기여한 공로가 있다고 인정될 때 집행위원회의 심의로 지회장이 표창할 수 있고, 지회장은 조합 및 지부에 표창을 추천할 수 있다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제41조(징계)</h4>
+        <p>조합원이 각종 의결사항 및 규정과 규칙을 위반하였을 때는 지회 운영위원회의 심의를 거쳐 지부 운영위원회에 징계심의를 제청한다. 구체적인 사항은 조합의 징계규정에 따른다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제42조(신분보장)</h4>
+        <p>조합원이 조합활동으로 인한 불이익이 발생할 시에는 그 신분 및 경제적 손실을 보장하고, 별도의 세칙으로 정한다. 단, 구체적인 사항은 조합의 신분보장 규정에 따르되 조합원에게 기존 운용방식에 비해 불이익이 없도록 한다.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="buchik">
+      <h2 class="chapter-title">부칙</h2>
+
+      <div class="article">
+        <h4>제1조(통상관례)</h4>
+        <p>이 규정에 부족한 사항은 조합 규약 및 규정, 지부규칙과 통상관례에 따른다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제2조(시행)</h4>
+        <p>이 규정은 통과된 날로부터 시행한다.</p>
+      </div>
+
+      <div class="article">
+        <h4>제3조(경과규정)</h4>
+        <p>지회 규칙 제17조 대의원 선출 및 구성은 재적조합원 300명이 되는 때로부터 시행한다.</p>
+      </div>
+
+      <div class="enact-block">
+        <b>2020년 2월 27일</b><br>
+        전국화학섬유식품산업노동조합 타투유니온지회<br>
+        ▶ 2020년 2월 27일 제정
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="brand">TATTOO UNION KOREA · 집행부 허브</footer>
+
+</body>
+</html>
