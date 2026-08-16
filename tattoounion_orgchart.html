@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>조직도 — 타투유니온</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<style>
+  :root{
+    --bg:#FAFAF7;
+    --bg-card:#FFFFFF;
+    --fg:#141414;
+    --fg-dim:#6C6A63;
+    --red:#D6291F;
+    --red-dim:#F3C6C2;
+    --line:#E3E0D6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:'Pretendard Variable','Noto Sans KR',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; border-bottom:1px solid var(--line);
+  }
+  .topbar .org{ font-size:13.5px; color:var(--fg-dim); letter-spacing:.3px; }
+  .topbar .org b{ color:var(--fg); }
+  .topbar a.back{ font-size:12px; color:var(--fg-dim); text-decoration:none; font-weight:700; }
+  .topbar a.back:hover{ color:var(--red); }
+
+  header{ padding:44px 28px 20px; max-width:1200px; margin:0 auto; }
+  h1{ font-size:clamp(26px,4vw,34px); font-weight:900; margin:0 0 10px; letter-spacing:-0.4px; }
+  header p{ font-size:14px; color:var(--fg-dim); margin:0; line-height:1.6; }
+
+  .wrap{ max-width:1200px; margin:0 auto; padding:20px 28px 100px; }
+
+  /* ---------- org chart tree ---------- */
+  .org-connector{ width:2px; height:26px; background:var(--line); margin:0 auto; }
+
+  .org-row{
+    display:flex; flex-wrap:wrap; justify-content:center;
+    gap:28px 20px; padding-top:26px; position:relative; margin-top:0;
+  }
+  .org-row::before{
+    content:''; position:absolute; top:0; left:8%; right:8%; height:2px; background:var(--line);
+  }
+  .org-row-top{ padding-top:0; }
+  .org-row-top::before{ display:none; }
+  .org-row-top .org-card::before{ display:none; }
+  .org-card{ position:relative; flex:1 1 220px; max-width:260px; }
+  .org-row .org-card::before{
+    content:''; position:absolute; top:-26px; left:50%; width:2px; height:26px;
+    background:var(--line); transform:translateX(-50%);
+  }
+
+  .card{
+    background:var(--bg-card); border:1px solid var(--line);
+    padding:16px 18px; height:100%;
+  }
+  .card.chief{
+    border-top:3px solid var(--red); max-width:320px; margin:0 auto;
+  }
+  .card-role{
+    font-size:12.5px; font-weight:700; color:var(--red);
+    background:var(--red-dim); display:inline-block; padding:4px 10px; margin-bottom:9px;
+    letter-spacing:.2px;
+  }
+  .card-name{ font-size:19px; font-weight:900; margin-bottom:12px; }
+  .card ul{ list-style:none; margin:0; padding:0; }
+  .card > ul > li{ font-size:15px; line-height:1.65; margin-bottom:12px; }
+  .card > ul > li:last-child{ margin-bottom:0; }
+  .card > ul > li > b{ display:block; font-weight:700; margin-bottom:5px; }
+  .card ul ul{ margin:5px 0 0; padding-left:12px; border-left:1.5px solid var(--line); }
+  .card ul ul li{
+    font-size:13.5px; color:var(--fg-dim); line-height:1.65; margin-bottom:5px; list-style:none;
+  }
+  .card ul ul ul{ margin-top:5px; }
+  .card ul ul ul li{ font-size:13px; }
+
+  .org-side{
+    margin-top:56px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center;
+  }
+  .org-side .card{ border-top:2px dashed var(--fg-dim); flex:1 1 260px; max-width:340px; }
+  .org-side-label{
+    text-align:center; font-size:11px; color:var(--fg-dim); letter-spacing:.4px;
+    margin:56px 0 -14px;
+  }
+
+  footer.brand{
+    text-align:center; padding:30px 28px 50px;
+    font-size:12.5px; color:var(--fg-dim); letter-spacing:.4px;
+  }
+
+  @media (max-width:640px){
+    .org-row{ flex-direction:column; align-items:center; }
+    .org-row::before{ display:none; }
+    .org-row .org-card::before{ display:none; }
+    .org-card{ max-width:340px; width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="org">민주노총 화섬식품노조 <b>타투유니온지회</b></span>
+  <a class="back" href="tattoounionhub_22.html">← 업무 허브로 돌아가기</a>
+</div>
+
+<header>
+  <h1>지회 조직도</h1>
+  <p>집행위원회 구성과 각 직책이 맡고 있는 업무 영역입니다. 회계감사는 규칙 제26조에 따라 집행위원회와 별도 기구입니다.</p>
+</header>
+
+<div class="wrap">
+
+  <div class="org-row org-row-top">
+    <div class="org-card">
+      <div class="card chief">
+        <span class="card-role">지회장</span>
+        <div class="card-name">김도윤</div>
+        <ul>
+          <li>
+            <b>대외활동(대관·대언론)</b>
+            <ul>
+              <li>대관(대 정부) — 국회, 보건복지부, 식약처 등</li>
+              <li>대언론</li>
+            </ul>
+          </li>
+          <li>
+            <b>지회 운영</b>
+            <ul><li>회의 주재, 운영</li></ul>
+          </li>
+          <li>
+            <b>조직 확장</b>
+            <ul>
+              <li>전국문신사연합 건설</li>
+              <li>신규 사업 기획</li>
+              <li>작업일람 어플 개발</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="org-card">
+      <div class="card">
+        <span class="card-role">수석부지회장</span>
+        <div class="card-name">이소미</div>
+        <ul>
+          <li>지회장 보좌, 전체 업무 관리</li>
+          <li>
+            <b>조합원 관리(조직 업무)</b>
+            <ul>
+              <li>관리 행정 — 조합비 납부, CMS 관리, 조합원 가입·탈퇴 등 회계 업무</li>
+              <li>교육, 간부 관리, 조직, 예비간부 발굴</li>
+              <li>
+                조합원 소통(카페, 카카오톡, 문자, 인스타 DM)
+                <ul>
+                  <li>신규 조합원 환영 문자 발송 및 카페 가입 승인</li>
+                  <li>감염관리교육, 정기건강검진 공지 발송</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>선전/홍보</b>
+            <ul>
+              <li>SNS 콘텐츠 운영(카페, 유튜브, 인스타, 홈페이지)</li>
+              <li>업무보고 영상 편집 후 업로드(격월)</li>
+              <li>취재요청서·보도자료 작성</li>
+            </ul>
+          </li>
+          <li>
+            <b>재정관리</b>
+            <ul><li>예산 집행, 기금·자산·현금 관리</li></ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="org-card">
+      <div class="card">
+        <span class="card-role">사무장</span>
+        <div class="card-name">황수경</div>
+        <ul>
+          <li>
+            <b>회의 운영 지원</b>
+            <ul><li>회의 자료 준비, 회의록 작성</li></ul>
+          </li>
+          <li>
+            <b>그린타투센터 업무</b>
+            <ul>
+              <li>정기건강검진</li>
+              <li>감염관리교육 주·보조 강사</li>
+              <li>감염관리교육 강사 양성</li>
+              <li>조합원 교육·세미나 기획</li>
+              <li>그린랩 운영 보조</li>
+            </ul>
+          </li>
+          <li>
+            <b>법률상담 연계</b>
+            <ul>
+              <li>조합원 법률분쟁 상담 및 변호사 연결</li>
+              <li>법률 대응 매뉴얼 관리·갱신</li>
+              <li>관련 법·정책 모니터링</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="org-connector"></div>
+
+  <div class="org-row">
+    <div class="org-card">
+      <div class="card">
+        <span class="card-role">교육부장</span>
+        <div class="card-name">이찬영</div>
+        <ul>
+          <li>그린타투센터</li>
+          <li>감염관리교육 주·보조 강사</li>
+          <li>감염관리교육 강사 양성</li>
+          <li>조합원 교육·세미나 기획</li>
+          <li>그린랩 운영 보조</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="org-card">
+      <div class="card">
+        <span class="card-role">홍보부장</span>
+        <div class="card-name">김남령</div>
+        <ul>
+          <li>홍보물·카드뉴스 제작 및 홍보</li>
+          <li>SNS·홈페이지 관리</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="org-card">
+      <div class="card">
+        <span class="card-role">조직부장</span>
+        <div class="card-name">김법승</div>
+        <ul>
+          <li>조합원 소통, 질문 대응</li>
+          <li>행사·연대활동 참여</li>
+          <li>신규 조합원 조직</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="org-side-label">집행위원회와 별도 기구 (대의원회의: 규칙 제14조 · 회계감사: 규칙 제26조)</div>
+  <div class="org-side">
+    <div class="card">
+      <span class="card-role">대의원회의</span>
+      <div class="card-name">각 권역 대의원단</div>
+      <ul>
+        <li>지회 총회 다음가는 의결기구 · 사업계획 수립, 예산 승인·결산 보고, 단체행동 대책 등 심의</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="card-role">회계감사</span>
+      <div class="card-name">한지현, 민시우</div>
+      <ul>
+        <li>연 2회(6개월마다) 회계 감사 및 보고서 작성</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer class="brand">TATTOO UNION KOREA · 집행부 허브</footer>
+
+</body>
+</html>
