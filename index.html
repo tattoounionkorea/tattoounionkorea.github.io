@@ -76,14 +76,26 @@
       padding: 0 40px 80px;
       position: relative;
       overflow: hidden;
+      background: #14192e;
     }
 
-    .hero-bg {
+    .hero-photo {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 55% 45% at 85% 25%, rgba(45,66,176,0.09) 0%, transparent 65%),
-        var(--bg);
+      background-image: url('hero.jpg');
+      background-size: cover;
+      background-position: center 32%;
+      filter: saturate(0.92) contrast(1.04);
+    }
+
+    .hero-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        rgba(14,18,38,0.12) 0%,
+        rgba(14,18,38,0.38) 38%,
+        rgba(10,13,28,0.86) 82%,
+        rgba(10,13,28,0.94) 100%);
     }
 
     .hero-content { position: relative; z-index: 1; max-width: 900px; }
@@ -92,7 +104,7 @@
       font-size: clamp(12px, 1.2vw, 16px);
       font-weight: 700;
       letter-spacing: 0.15em;
-      color: var(--blue);
+      color: #a6b6ff;
       margin-bottom: 28px;
       opacity: 0;
       animation: fadeUp 0.7s ease 0.2s forwards;
@@ -104,15 +116,16 @@
       line-height: 0.95;
       letter-spacing: -0.02em;
       margin-bottom: 40px;
+      color: #f5f4f0;
       opacity: 0;
       animation: fadeUp 0.7s ease 0.4s forwards;
     }
 
-    .hero-title .line-blue { color: var(--blue); display: block; }
+    .hero-title .line-blue { color: #7c8fff; display: block; }
 
     .hero-desc {
       font-size: clamp(16px, 2vw, 19px);
-      color: var(--muted);
+      color: rgba(245,244,240,0.82);
       max-width: 540px;
       margin-bottom: 48px;
       opacity: 0;
@@ -143,9 +156,9 @@
     }
 
     .section-label {
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--blue);
       margin-bottom: 20px;
     }
@@ -197,8 +210,9 @@
     }
 
     .stat-label {
-      font-size: 13px;
-      color: var(--muted);
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(26,26,26,0.82);
       line-height: 1.5;
     }
 
@@ -220,15 +234,15 @@
     .benefit:hover { background: rgba(45,66,176,0.08); }
 
     .benefit-title {
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 700;
       color: var(--blue);
       margin-bottom: 8px;
     }
 
     .benefit-body {
-      font-size: 14px;
-      color: var(--muted);
+      font-size: 15px;
+      color: rgba(26,26,26,0.82);
       line-height: 1.7;
     }
 
@@ -297,7 +311,7 @@
     }
 
     .footer-links a {
-      font-size: 13px;
+      font-size: 14px;
       color: rgba(26,26,26,0.65);
       text-decoration: none;
       transition: color 0.2s;
@@ -321,6 +335,7 @@
     @media (max-width: 640px) {
       nav { padding: 14px 20px; }
       .hero { padding: 0 20px 60px; }
+      .hero-photo { background-image: url('hero-mobile.jpg'); background-position: center 22%; }
       section { padding: 72px 20px; }
       .divider { margin: 0 20px; }
       .join-section { padding: 80px 20px; }
@@ -337,12 +352,13 @@
     </a>
     <div style="display:flex; align-items:center; gap:20px;">
       <a href="history.html" style="font-size:14px; font-weight:700; color:var(--text); text-decoration:none; letter-spacing:0.04em; opacity:0.7; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">연혁</a>
-      <a class="nav-join" href="https://cmsagree2.npas.co.kr/fiBQteuFjO?bc=07" target="_blank" rel="noopener">가입</a>
+      <a class="nav-join" href="#join-section">가입</a>
     </div>
   </nav>
 
   <div class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-photo"></div>
+    <div class="hero-scrim"></div>
     <div class="hero-content">
       <div class="hero-label">민주노총 화섬식품노조 타투유니온지회</div>
       <h1 class="hero-title">
@@ -352,7 +368,7 @@
       <p class="hero-desc">
         타투예술노동자가 더 안전하게,<br>존중받으며 일할 수 있는 세상을 만듭니다.
       </p>
-      <a class="hero-cta" href="https://cmsagree2.npas.co.kr/fiBQteuFjO?bc=07" target="_blank" rel="noopener">지금 가입하기 →</a>
+      <a class="hero-cta" href="#join-section">지금 가입하기 →</a>
     </div>
   </div>
 
@@ -374,8 +390,8 @@
         <div class="stat-label">민주노총 전체 조합원</div>
       </div>
       <div class="stat">
-        <div class="stat-num">45,000</div>
-        <div class="stat-label">화섬식품노조 조합원<br>239개 사업장지회</div>
+        <div class="stat-num">5만+</div>
+        <div class="stat-label">화섬식품노조 조합원<br>240여 사업장지회</div>
       </div>
       <div class="stat">
         <div class="stat-num">600+</div>
@@ -462,7 +478,7 @@
     </div>
   </section>
 
-  <div class="join-section">
+  <div class="join-section" id="join-section">
     <div class="section-label">조합 가입</div>
     <h2 class="section-title">지금 함께하세요</h2>
     <div class="section-body">
